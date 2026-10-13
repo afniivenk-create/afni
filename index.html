@@ -3,51 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Petualangan Kombinasi di Kantin Ceria!</title>
+    <title>Petualangan Kombinasi Jajanan Pasar Ceria!</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- MathJax for rendering Mathematical Formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #fef08a 0%, #fed7aa 50%, #fbcfe8 100%);
             min-height: 100vh;
         }
-        .bounce-custom {
-            animation: bounce 2s infinite;
-        }
         @keyframes pulse-scale {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.04); }
         }
         .animate-pulse-scale {
-            animation: pulse-scale 1.5s infinite;
+            animation: pulse-scale 1.8s infinite ease-in-out;
+        }
+        @keyframes float-gentle {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+            animation: float-gentle 3s ease-in-out infinite;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #fcd34d;
+            border-radius: 9999px;
         }
     </style>
 </head>
-<body class="text-slate-800 flex flex-col min-h-screen">
+<body class="text-slate-800 flex flex-col min-h-screen selection:bg-amber-200">
 
-    <header class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50 px-4 py-3">
+    <header class="bg-white/85 backdrop-blur-md shadow-md sticky top-0 z-50 px-4 py-3 border-b border-amber-100">
         <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3">
-                <div class="bg-amber-400 text-white p-2.5 rounded-2xl shadow-inner text-2xl">
-                    <i class="fa-solid fa-cookie-bite"></i>
+                <div class="bg-gradient-to-tr from-amber-500 to-orange-400 text-white p-2.5 rounded-2xl shadow-md text-2xl animate-float">
+                    <i class="fa-solid fa-basket-shopping"></i>
                 </div>
                 <div>
-                    <h1 class="font-extrabold text-lg sm:text-xl text-amber-600 leading-tight">Misteri Kombinasi Kantin</h1>
-                    <p class="text-xs text-slate-500">Pendekatan Penemuan & Eksplorasi Asyik</p>
+                    <h1 class="font-black text-lg sm:text-xl text-amber-800 leading-tight flex items-center gap-1.5">
+                        Misteri Kombinasi Jajanan Pasar 
+                        <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full border border-amber-300 font-bold">Interaktif</span>
+                    </h1>
+                    <p class="text-xs text-slate-500 font-medium">Pembelajaran Berbasis Penemuan & Simulasi Kontekstual</p>
                 </div>
             </div>
-            <!-- Wizard Tab Navigation -->
-            <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-2xl shadow-inner w-full sm:w-auto justify-center">
-                <button onclick="switchTab(1)" id="tab-btn-1" class="flex-1 sm:flex-none px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-amber-500 text-white shadow">
+            
+            <!-- Tab Navigation Buttons -->
+            <div class="flex items-center gap-1 bg-amber-100/70 p-1.5 rounded-2xl shadow-inner w-full sm:w-auto justify-center border border-amber-200">
+                <button onclick="switchTab(1)" id="tab-btn-1" class="flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all bg-amber-500 text-white shadow-md">
                     1. Eksplorasi
                 </button>
-                <button onclick="switchTab(2)" id="tab-btn-2" class="flex-1 sm:flex-none px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-amber-600">
+                <button onclick="switchTab(2)" id="tab-btn-2" class="flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all text-slate-600 hover:text-amber-700">
                     2. Abstraksi
                 </button>
-                <button onclick="switchTab(3)" id="tab-btn-3" class="flex-1 sm:flex-none px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-amber-600">
+                <button onclick="switchTab(3)" id="tab-btn-3" class="flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all text-slate-600 hover:text-amber-700">
                     3. Evaluasi
                 </button>
             </div>
@@ -56,29 +76,28 @@
 
     <main class="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 mb-12">
 
-        <!-- ================= TAHAP 1: EKSPLORASI ================= -->
         <section id="tab-1" class="space-y-6">
-            <div class="bg-white rounded-3xl p-5 sm:p-8 shadow-xl border-4 border-amber-200">
-                <div class="inline-block bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold mb-3">
-                    <i class="fa-solid fa-compass mr-1"></i> Tahap 1: Eksplorasi Kontekstual
+            <div class="bg-white/95 rounded-3xl p-5 sm:p-8 shadow-xl border-4 border-amber-200/80 backdrop-blur-sm">
+                <div class="inline-flex items-center gap-1.5 bg-amber-100 text-amber-800 px-3.5 py-1 rounded-full text-xs font-bold mb-3 border border-amber-300">
+                    <i class="fa-solid fa-compass text-amber-600"></i> Tahap 1: Eksplorasi Jajanan Kantin
                 </div>
-                <h2 class="text-xl sm:text-2xl font-black text-slate-800 mb-2">Jajanan Kantin Rp 2.000 🧃🍩</h2>
-                <p class="text-sm sm:text-base text-slate-600 mb-4">
-                    Kamu membawa uang saku <strong>Rp 2.000</strong>. Di kantin tersedia jajanan seharga <strong>Rp 1.000</strong> per item. Pilih tepat <strong>2 jajanan berbeda</strong> untuk dimasukkan ke dalam Mangkok Kantin! Klik jajanan di bawah ini.
+                <h2 class="text-xl sm:text-2xl font-black text-slate-800 mb-2">Beli Jajanan Tradisional (Uang Saku Rp 2.000) 🥟🍮</h2>
+                <p class="text-sm sm:text-base text-slate-600 mb-5 leading-relaxed">
+                    Kamu membawa uang saku <strong>Rp 2.000</strong> ke kantin kejujuran sekolah. Di meja snack tersedia berbagai kue tradisional favorit seharga <strong>Rp 1.000</strong> per buah (seperti <em>Jalangkote, Cantik Manis, Risoles, Dadar Gulung, Kue Ku, & Lemper</em>). Pilih tepat <strong>2 jenis jajanan berbeda</strong> untuk dimasukkan ke mangkokmu!
                 </p>
 
                 <!-- Status Uang & Pilihan -->
-                <div class="flex flex-wrap justify-between items-center bg-amber-50 p-3 sm:p-4 rounded-2xl mb-6 border border-amber-200 gap-2">
+                <div class="flex flex-wrap justify-between items-center bg-gradient-to-r from-amber-50 to-orange-50 p-3.5 sm:p-4 rounded-2xl mb-6 border-2 border-amber-200 gap-3">
                     <div class="flex items-center gap-2">
-                        <span class="bg-emerald-500 text-white px-3 py-1 rounded-xl text-xs sm:text-sm font-bold shadow">
-                            <i class="fa-solid fa-wallet mr-1"></i> Sisa Uang: Rp <span id="sisa-uang">2000</span>
+                        <span class="bg-emerald-500 text-white px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold shadow-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-wallet"></i> Sisa Uang: Rp <span id="sisa-uang">2000</span>
                         </span>
                     </div>
-                    <div class="text-xs sm:text-sm font-semibold text-slate-700">
-                        Dipilih: <span id="jumlah-terpilih" class="text-amber-600 font-bold">0</span> / 2 Item
+                    <div class="text-xs sm:text-sm font-bold text-slate-700 bg-white/80 px-3 py-1.5 rounded-xl border border-amber-200">
+                        Item Terpilih: <span id="jumlah-terpilih" class="text-amber-600 font-extrabold text-base">0</span> / 2 Item
                     </div>
                     <div>
-                        <button onclick="resetEksplorasi()" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold px-3 py-1.5 rounded-xl transition-all">
+                        <button onclick="resetEksplorasi()" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-700 font-extrabold px-3.5 py-2 rounded-xl transition-all border border-rose-300 active:scale-95">
                             <i class="fa-solid fa-rotate-right mr-1"></i> Reset Mangkok
                         </button>
                     </div>
@@ -86,164 +105,183 @@
 
                 <!-- Grid Item Jajanan & Mangkok -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Daftar Jajanan -->
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-700 mb-3"><i class="fa-solid fa-store mr-1 text-amber-500"></i> Etalase Kantin (Klik untuk pilih):</h3>
-                        <div class="grid grid-cols-2 gap-3" id="etalase-jajanan">
-                            <!-- Rendered by JS -->
+                    <!-- Etalase Meja Jajanan -->
+                    <div class="bg-amber-50/50 p-4 rounded-2xl border border-amber-200">
+                        <h3 class="text-xs font-extrabold text-amber-800 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-store text-amber-600"></i> Meja Jajanan Tradisional (Klik Kue):
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 gap-3" id="etalase-jajanan">
+                            <!-- Items dynamically rendered by JS -->
                         </div>
                     </div>
 
-                    <!-- Mangkok Kantin -->
-                    <div class="bg-amber-100/60 rounded-2xl p-4 border-2 border-dashed border-amber-300 flex flex-col justify-between">
+                    <!-- Mangkok Jajanan Interaktif -->
+                    <div class="bg-gradient-to-b from-amber-100/80 to-amber-50/80 rounded-2xl p-4 border-2 border-dashed border-amber-400 flex flex-col justify-between shadow-inner">
                         <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-sm font-bold text-amber-800"><i class="fa-solid fa-bowl-food mr-1"></i> Mangkok Kantin Kamu</h3>
-                                <span class="text-xs bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full font-semibold">Kapasitas: 2</span>
+                            <div class="flex items-center justify-between mb-3 border-b border-amber-200/80 pb-2">
+                                <h3 class="text-sm font-extrabold text-amber-900 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-bowl-food text-amber-600"></i> Mangkok Jajanan Kamu
+                                </h3>
+                                <span class="text-[11px] bg-amber-200 text-amber-800 px-2.5 py-0.5 rounded-full font-extrabold">Kapasitas 2 Item</span>
                             </div>
-                            <div id="mangkok-items" class="grid grid-cols-2 gap-3 min-h-[140px] items-center">
-                                <div class="col-span-2 text-center text-slate-400 text-sm py-8 italic flex flex-col items-center justify-center gap-1">
-                                    <i class="fa-solid fa-hand-pointer text-xl animate-bounce">></i>
-                                    <span>Belum ada makanan di mangkok. Klik 2 jajanan dari etalase!</span>
+                            <div id="mangkok-items" class="grid grid-cols-1 gap-2.5 min-h-[160px] items-center">
+                                <div class="text-center text-slate-400 text-xs sm:text-sm py-10 italic flex flex-col items-center justify-center gap-2">
+                                    <i class="fa-solid fa-hand-pointer text-2xl text-amber-400 animate-bounce"></i>
+                                    <span>Mangkok masih kosong.<br>Klik 2 kue lezat dari meja!</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="info-kombinasi-baru" class="mt-4 pt-3 border-t border-amber-200/60 text-xs font-semibold text-center text-amber-900 hidden">
-                            ✨ Hore! Kombinasi berhasil dicatat!
+                        <div id="info-kombinasi-baru" class="mt-3 pt-2.5 border-t border-amber-300/60 text-xs font-bold text-center text-emerald-700 bg-emerald-50 rounded-xl py-2 px-3 border border-emerald-200 hidden animate-fadeIn">
+                            ✨ Hore! Kombinasi pasangan jajanan baru tercatat!
                         </div>
                     </div>
                 </div>
 
                 <!-- Riwayat Kombinasi Unik -->
                 <div class="mt-6 pt-6 border-t border-slate-200">
-                    <h3 class="text-sm font-bold text-slate-700 mb-2 flex items-center justify-between">
-                        <span><i class="fa-solid fa-list-check mr-1 text-emerald-500"></i> Daftar Kombinasi Unik yang Ditemukan:</span>
-                        <span id="counter-kombinasi" class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-xl font-bold">0 dari 6 Kombinasi</span>
-                    </h3>
-                    <div id="riwayat-list" class="flex flex-wrap gap-2 mt-2">
-                        <span class="text-xs text-slate-400 italic">Belum ada kombinasi tercatat. Temukan semuanya!</span>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                        <h3 class="text-sm font-extrabold text-slate-700 flex items-center gap-2">
+                            <i class="fa-solid fa-rectangle-list text-emerald-500 text-lg"></i>
+                            Daftar Kombinasi Unik yang Ditemukan:
+                        </h3>
+                        <span id="counter-kombinasi" class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1 rounded-xl font-black border border-emerald-300 self-start sm:self-auto">
+                            0 dari 15 Kombinasi Unik
+                        </span>
+                    </div>
+                    <div id="riwayat-list" class="flex flex-wrap gap-2 min-h-[42px] bg-slate-50 p-3 rounded-2xl border border-slate-200 custom-scrollbar max-h-36 overflow-y-auto">
+                        <span class="text-xs text-slate-400 italic py-1">Belum ada pasangan kue dicatat. Temukan variasi kombinasinya!</span>
                     </div>
                 </div>
 
                 <!-- Pertanyaan Pemantik Interaktif -->
-                <div id="pertanyaan-pemantik-container" class="mt-8 bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 sm:p-5 hidden">
-                    <h3 class="text-base font-extrabold text-sky-900 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i> Pertanyaan Pemantik Eksplorasi:
+                <div id="pertanyaan-pemantik-container" class="mt-8 bg-gradient-to-r from-sky-50 to-indigo-50 border-2 border-sky-300 rounded-3xl p-5 sm:p-6 hidden shadow-md">
+                    <h3 class="text-base font-black text-sky-900 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb text-amber-500 text-xl animate-pulse"></i> Pertanyaan Pemantik Penemuan Konsep:
                     </h3>
-                    <p class="text-sm text-slate-700 mb-4 font-medium">
-                        Misalnya kamu memilih <strong>Kerupuk</strong> lalu <strong>Es Teh</strong>, apakah mangkokmu akan berbeda isinya jika kamu memilih <strong>Es Teh</strong> lalu <strong>Kerupuk</strong>? Apakah urutan pemilihan penting dalam mangkok jajanan ini?
+                    <p class="text-xs sm:text-sm text-slate-700 mb-4 leading-relaxed font-medium">
+                        Misalnya kamu mengambil <strong>Jalangkote</strong> terlebih dahulu lalu <strong>Cantik Manis</strong>, apakah isi mangkokmu akan berbeda jika kamu mengambil <strong>Cantik Manis</strong> terlebih dahulu lalu <strong>Jalangkote</strong>? Apakah urutan pengambilan berpengaruh terhadap hasil jajanan di mangkokmu?
                     </p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="opsi-pemantik">
-                        <button onclick="jawabPemantik(false)" class="p-3 bg-white hover:bg-sky-100 border border-sky-300 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 text-left transition-all shadow-sm">
-                            A. Berbeda, karena urutan memasukkan barang ke mangkok menentukan rasanya.
+                        <button onclick="jawabPemantik(false)" class="p-3.5 bg-white hover:bg-sky-100 border-2 border-sky-200 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 text-left transition-all shadow-sm hover:border-sky-400 active:scale-98">
+                            A. Berbeda! Urutan kue saat dimasukkan menentukan kombinasi di mangkok.
                         </button>
-                        <button onclick="jawabPemantik(true)" class="p-3 bg-white hover:bg-sky-100 border border-sky-300 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 text-left transition-all shadow-sm">
-                            B. Sama saja! Isi mangkok tetap Kerupuk dan Es Teh (Urutan tidak penting).
+                        <button onclick="jawabPemantik(true)" class="p-3.5 bg-white hover:bg-sky-100 border-2 border-sky-200 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 text-left transition-all shadow-sm hover:border-sky-400 active:scale-98">
+                            B. Sama Saja! Isi mangkok tetap berisi Jalangkote & Cantik Manis (Urutan TIDAK penting).
                         </button>
                     </div>
-                    <div id="feedback-pemantik" class="mt-3 p-3 rounded-xl text-xs sm:text-sm font-bold hidden"></div>
+                    <div id="feedback-pemantik" class="mt-4 p-3.5 rounded-2xl text-xs sm:text-sm font-bold hidden border"></div>
                 </div>
 
                 <!-- Tombol Lanjut ke Tahap 2 -->
                 <div id="btn-lanjut-1" class="mt-6 text-right hidden">
-                    <button onclick="switchTab(2)" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold px-6 py-3 rounded-2xl shadow-lg transition-all text-sm flex items-center gap-2 ml-auto">
-                        <span>Lanjut ke Tahap 2: Abstraksi & Rumus</span>
+                    <button onclick="switchTab(2)" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black px-6 py-3.5 rounded-2xl shadow-lg transition-all text-sm inline-flex items-center gap-2 active:scale-95">
+                        <span>Lanjut ke Tahap 2: Abstraksi Rumus</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- ================= TAHAP 2: ABSTRAKSI ================= -->
         <section id="tab-2" class="space-y-6 hidden">
-            <div class="bg-white rounded-3xl p-5 sm:p-8 shadow-xl border-4 border-orange-200">
-                <div class="inline-block bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold mb-3">
-                    <i class="fa-solid fa-brain mr-1"></i> Tahap 2: Abstraksi & Konstruksi Rumus
+            <div class="bg-white/95 rounded-3xl p-5 sm:p-8 shadow-xl border-4 border-orange-200/80 backdrop-blur-sm">
+                <div class="inline-flex items-center gap-1.5 bg-orange-100 text-orange-800 px-3.5 py-1 rounded-full text-xs font-bold mb-3 border border-orange-300">
+                    <i class="fa-solid fa-brain text-orange-600"></i> Tahap 2: Abstraksi & Konstruksi Rumus
                 </div>
-                <h2 class="text-xl sm:text-2xl font-black text-slate-800 mb-2">Permainan 'Lebur' Permutasi ke Kombinasi 🧪</h2>
-                <p class="text-sm sm:text-base text-slate-600 mb-6">
-                    Dari 3 item jajanan (<span class="text-amber-600 font-bold">Kerupuk, Es Teh, Donat</span>), jika kita memilih 2 item dengan memperhatikan urutan (Permutasi), kita mendapatkan <strong>6 susunan</strong>. Namun, karena urutan dalam mangkok tidak penting, susunan yang isinya sama dilebur menjadi satu!
+                <h2 class="text-xl sm:text-2xl font-black text-slate-800 mb-2">Permainan Peleburan: Permutasi $\rightarrow$ Kombinasi 🧪</h2>
+                <p class="text-sm sm:text-base text-slate-600 mb-6 leading-relaxed">
+                    Misalkan terdapat 3 jajanan pasar (<span class="text-amber-700 font-bold">Jalangkote, Cantik Manis, Lemper</span>). Jika kita memperhatikan urutan pengambilan (Permutasi), terdapat <strong>6 susunan</strong> berbeda. Namun, karena urutan di dalam mangkok tidak penting, susunan yang berisi kue sama akan dilebur menjadi 1 kombinasi!
                 </p>
 
-                <!-- Animasi Permainan Lebur -->
-                <div class="bg-orange-50 rounded-2xl p-4 sm:p-6 border border-orange-200 mb-6">
+                <!-- Animasi Interactive Lebur Box -->
+                <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-3xl p-5 sm:p-6 border-2 border-orange-200 mb-6 shadow-sm">
                     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
-                        <div class="w-full md:w-1/2 text-center bg-white p-4 rounded-2xl shadow-sm border border-orange-200">
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Permutasi (Urutan Penting)</span>
+                        <div class="w-full md:w-1/2 text-center bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-orange-200">
+                            <span class="text-[11px] font-black text-slate-400 uppercase tracking-wider">Permutasi $P(3,2)$ (Urutan Penting)</span>
                             <div class="text-3xl font-black text-orange-600 mt-1">6 Susunan</div>
-                            <p class="text-xs text-slate-500 mt-1">AB, BA, AC, CA, BC, CB</p>
+                            <p class="text-xs text-slate-500 mt-2 font-medium">(J,C), (C,J), (J,L), (L,J), (C,L), (L,C)</p>
                         </div>
-                        <div class="text-2xl text-orange-400 font-bold animate-pulse">
-                            <i class="fa-solid fa-arrows-down-to-line md:fa-arrow-right"></i>
+                        <div class="text-2xl text-orange-500 font-black animate-pulse py-2 md:py-0">
+                            <i class="fa-solid fa-circle-arrow-right hidden md:inline"></i>
+                            <i class="fa-solid fa-circle-arrow-down md:hidden"></i>
                         </div>
-                        <div class="w-full md:w-1/2 text-center bg-white p-4 rounded-2xl shadow-sm border border-orange-200">
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Kombinasi (Urutan TIDAK Penting)</span>
+                        <div class="w-full md:w-1/2 text-center bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-orange-200">
+                            <span class="text-[11px] font-black text-slate-400 uppercase tracking-wider">Kombinasi $C(3,2)$ (Urutan Diabaikan)</span>
                             <div class="text-3xl font-black text-emerald-600 mt-1">3 Kombinasi</div>
-                            <p class="text-xs text-slate-500 mt-1">AB, AC, BC (Dilebur dibagi 2!)</p>
+                            <p class="text-xs text-slate-500 mt-2 font-medium">{J,C}, {J,L}, {C,L} (Dilebur dibagi $2!$)</p>
                         </div>
                     </div>
 
                     <div class="text-center">
-                        <button onclick="jalankanLeburAnimasi()" id="btn-lebur" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded-xl shadow transition-all text-sm">
-                            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Visualisasikan Peleburan (Bagi dengan 2!)
+                        <button onclick="jalankanLeburAnimasi()" id="btn-lebur" class="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-extrabold px-6 py-3 rounded-2xl shadow-md transition-all text-sm inline-flex items-center gap-2 active:scale-95">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Visualisasikan Peleburan (Bagi dengan $2!$)
                         </button>
                     </div>
 
-                    <div id="lebur-result-box" class="mt-4 p-4 bg-white rounded-xl border border-orange-200 hidden text-sm text-slate-700 animate-fadeIn">
-                        <p class="font-bold text-orange-800 mb-1">💡 Mengapa dibagi 2 (atau $2!$)?</p>
-                        <p>Karena setiap 2 item (misal Kerupuk & Es Teh) memiliki <strong>2! = 2 × 1 = 2</strong> cara penyusunan (Kerupuk-Es Teh dan Es Teh-Kerupuk). Untuk menghilangkan faktor urutan, jumlah permutasi harus dibagi dengan faktorial jumlah objek yang dipilih ($r!$).</p>
+                    <div id="lebur-result-box" class="mt-5 p-4 bg-white rounded-2xl border-2 border-orange-300 hidden text-xs sm:text-sm text-slate-700 animate-fadeIn shadow-sm">
+                        <p class="font-bold text-orange-900 mb-1.5 flex items-center gap-1.5">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i> Mengapa harus dibagi dengan $2!$ (atau $r!$)?
+                        </p>
+                        <p class="leading-relaxed">
+                            Setiap pasang kue yang terpilih (seperti Jalangkote & Cantik Manis) memiliki $2! = 2 \times 1 = 2$ variasi urutan pengambilan. Untuk menghilangkan pengaruh urutan, total permutasi $P(n,r)$ harus dibagi dengan faktorial dari jumlah objek yang dipilih ($r!$).
+                        </p>
                     </div>
                 </div>
 
-                <!-- Perakitan Rumus Interaktif -->
-                <div class="bg-slate-50 rounded-2xl p-4 sm:p-6 border border-slate-200">
-                    <h3 class="text-base font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-puzzle-piece text-amber-500"></i> Merakit Rumus Kombinasi $C(n,r)$
+                <!-- Interactive Formula Builder (Drag & Drop / Click Assembly) -->
+                <div class="bg-slate-50 rounded-3xl p-5 sm:p-6 border-2 border-slate-200">
+                    <h3 class="text-base font-black text-slate-800 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-puzzle-piece text-amber-500"></i> Rakit Rumus Kombinasi $C(n,r)$
                     </h3>
-                    <p class="text-sm text-slate-600 mb-4">
-                        Susun kepingan rumus di bawah ini ke tempat kosong yang tepat untuk membentuk rumus Kombinasi yang utuh!
+                    <p class="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
+                        Lengkapi slot rumus di bawah ini dengan mengklik atau menyeret kepingan rumus yang benar!
                     </p>
 
-                    <!-- Slot Tujuan Rumus -->
-                    <div class="flex flex-wrap items-center justify-center gap-2 bg-white p-4 sm:p-6 rounded-2xl shadow-inner border-2 border-dashed border-slate-300 mb-6">
-                        <span class="text-lg font-bold text-slate-700">$C(n,r)$</span>
-                        <span class="text-lg font-bold text-slate-700">=</span>
-                        <!-- Slot 1 -->
-                        <div id="slot-1" ondragover="allowDrop(event)" ondrop="dropRumus(event, 1)" class="w-32 h-12 bg-slate-100 border-2 border-slate-300 rounded-xl flex items-center justify-center text-sm font-bold text-slate-400 transition-all">
-                            [ Pangkas / Atas ]
-                        </div>
-                        <span class="text-lg font-bold text-slate-700">/</span>
-                        <!-- Slot 2 -->
-                        <div id="slot-2" ondragover="allowDrop(event)" ondrop="dropRumus(event, 2)" class="w-24 h-12 bg-slate-100 border-2 border-slate-300 rounded-xl flex items-center justify-center text-sm font-bold text-slate-400 transition-all">
-                            [ Bawah ]
+                    <!-- Target Slot Formula -->
+                    <div class="flex flex-wrap items-center justify-center gap-3 bg-white p-5 sm:p-7 rounded-2xl shadow-inner border-2 border-dashed border-slate-300 mb-6">
+                        <span class="text-lg sm:text-xl font-extrabold text-slate-800">$C(n,r)$</span>
+                        <span class="text-lg sm:text-xl font-extrabold text-slate-800">=</span>
+                        
+                        <div class="flex flex-col items-center gap-1">
+                            <!-- Slot Pembilang (Atas) -->
+                            <div id="slot-1" ondragover="allowDrop(event)" ondrop="dropRumus(event, 1)" class="w-32 h-12 bg-slate-100 border-2 border-dashed border-slate-400 rounded-xl flex items-center justify-center text-xs font-bold text-slate-400 transition-all shadow-sm">
+                                [ Pembilang ]
+                            </div>
+                            <div class="w-36 h-0.5 bg-slate-800 rounded-full"></div>
+                            <!-- Slot Penyebut (Bawah) -->
+                            <div id="slot-2" ondragover="allowDrop(event)" ondrop="dropRumus(event, 2)" class="w-28 h-12 bg-slate-100 border-2 border-dashed border-slate-400 rounded-xl flex items-center justify-center text-xs font-bold text-slate-400 transition-all shadow-sm">
+                                [ Penyebut ]
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Kepingan Pilihan (Drag / Click to place) -->
-                    <div class="mb-4">
-                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Kepingan Rumus (Seret atau Klik):</span>
+                    <!-- Formula Puzzle Pieces -->
+                    <div class="mb-5">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Kepingan Rumus (Klik untuk Memasang):</span>
                         <div class="flex flex-wrap gap-3" id="kepingan-container">
-                            <div draggable="true" ondragstart="dragRumus(event, 'P(n,r)')" onclick="klikKepingan('P(n,r)')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-xl shadow cursor-grab active:cursor-grabbing text-sm transition-transform hover:scale-105">
-                                P(n,r)
+                            <div draggable="true" ondragstart="dragRumus(event, 'P(n,r)')" onclick="klikKepingan('P(n,r)')" class="bg-amber-500 hover:bg-amber-600 text-white font-black px-4 py-2.5 rounded-xl shadow cursor-pointer text-sm transition-transform active:scale-95 flex items-center gap-1.5">
+                                <i class="fa-solid fa-grip-dots-vertical text-xs opacity-60"></i> P(n,r)
                             </div>
-                            <div draggable="true" ondragstart="dragRumus(event, 'r!')" onclick="klikKepingan('r!')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl shadow cursor-grab active:cursor-grabbing text-sm transition-transform hover:scale-105">
-                                r!
+                            <div draggable="true" ondragstart="dragRumus(event, 'r!')" onclick="klikKepingan('r!')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-black px-4 py-2.5 rounded-xl shadow cursor-pointer text-sm transition-transform active:scale-95 flex items-center gap-1.5">
+                                <i class="fa-solid fa-grip-dots-vertical text-xs opacity-60"></i> r!
                             </div>
-                            <div draggable="true" ondragstart="dragRumus(event, 'n!')" onclick="klikKepingan('n!')" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded-xl shadow cursor-grab active:cursor-grabbing text-sm transition-transform hover:scale-105">
-                                n!
+                            <div draggable="true" ondragstart="dragRumus(event, 'n!')" onclick="klikKepingan('n!')" class="bg-indigo-500 hover:bg-indigo-600 text-white font-black px-4 py-2.5 rounded-xl shadow cursor-pointer text-sm transition-transform active:scale-95 flex items-center gap-1.5">
+                                <i class="fa-solid fa-grip-dots-vertical text-xs opacity-60"></i> n!
                             </div>
                         </div>
                     </div>
 
-                    <!-- Pesan Sukses Perumusan -->
-                    <div id="rumus-sukses-box" class="p-4 bg-emerald-100 border border-emerald-300 rounded-2xl text-emerald-900 font-bold text-center hidden animate-pulse-scale">
-                        🎉 Hebat! Rumus Kombinasi Berhasil Dirakit: <br>
-                        <span class="text-lg text-emerald-800">$C(n,r) = \frac{P(n,r)}{r!} = \frac{n!}{(n-r)! \cdot r!}$</span>
+                    <!-- Formula Assembly Success Result -->
+                    <div id="rumus-sukses-box" class="p-5 bg-gradient-to-r from-emerald-100 to-teal-100 border-2 border-emerald-400 rounded-2xl text-emerald-950 font-bold text-center hidden animate-pulse-scale shadow-md">
+                        <p class="text-base text-emerald-900 mb-1">🎉 Luar Biasa! Rumus Kombinasi Berhasil Tersusun Utuh:</p>
+                        <div class="text-lg sm:text-xl text-emerald-950 py-2 font-black">
+                            $$C(n,r) = \frac{P(n,r)}{r!} = \frac{n!}{(n-r)! \cdot r!}$$
+                        </div>
+                        <p class="text-xs text-emerald-800 font-medium">Di mana $n$ = Total objek yang tersedia, dan $r$ = Jumlah objek yang dipilih.</p>
                     </div>
 
                     <div class="mt-6 text-right">
-                        <button onclick="switchTab(3)" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold px-6 py-3 rounded-2xl shadow-lg transition-all text-sm flex items-center gap-2 ml-auto">
+                        <button onclick="switchTab(3)" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black px-6 py-3.5 rounded-2xl shadow-lg transition-all text-sm inline-flex items-center gap-2 active:scale-95">
                             <span>Lanjut ke Tahap 3: Evaluasi Soal</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
@@ -252,58 +290,61 @@
             </div>
         </section>
 
-        <!-- ================= TAHAP 3: EVALUASI ================= -->
         <section id="tab-3" class="space-y-6 hidden">
-            <div class="bg-white rounded-3xl p-5 sm:p-8 shadow-xl border-4 border-emerald-200">
-                <div class="inline-block bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold mb-3">
-                    <i class="fa-solid fa-award mr-1"></i> Tahap 3: Evaluasi & Latihan Kontekstual
+            <div class="bg-white/95 rounded-3xl p-5 sm:p-8 shadow-xl border-4 border-emerald-200/80 backdrop-blur-sm">
+                <div class="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 px-3.5 py-1 rounded-full text-xs font-bold mb-3 border border-emerald-300">
+                    <i class="fa-solid fa-award text-emerald-600"></i> Tahap 3: Evaluasi Mandiri (10 Soal)
                 </div>
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-                    <h2 class="text-xl sm:text-2xl font-black text-slate-800">Kuis Tantangan Kombinasi 🏆</h2>
-                    <div class="bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-800">
-                        Soal <span id="current-soal-num">1</span> dari 10
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-800">Kuis Tantangan Kombinasi Jajanan Pasar 🏆</h2>
+                    <div class="bg-emerald-50 border border-emerald-200 px-3.5 py-1.5 rounded-xl text-xs font-black text-emerald-800 shadow-sm">
+                        Soal <span id="current-soal-num" class="text-amber-600 text-sm">1</span> dari 10
                     </div>
                 </div>
 
-                <!-- Soal Container -->
-                <div id="quiz-card" class="bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-6">
-                    <p id="soal-teks" class="text-sm sm:text-base font-semibold text-slate-800 mb-4">
-                        <!-- Loaded by JS -->
+                <!-- Quiz Card Container -->
+                <div id="quiz-card" class="bg-slate-50 border-2 border-slate-200 rounded-3xl p-5 sm:p-6 mb-6 shadow-inner">
+                    <p id="soal-teks" class="text-sm sm:text-base font-bold text-slate-800 mb-5 leading-relaxed">
+                        <!-- Loaded dynamically by JS -->
                     </p>
                     <div class="grid grid-cols-1 gap-3" id="pilihan-container">
-                        <!-- Options loaded by JS -->
+                        <!-- Options loaded dynamically by JS -->
                     </div>
                 </div>
 
-                <!-- Pembahasan & Navigasi Soal -->
-                <div id="pembahasan-box" class="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs sm:text-sm text-slate-700 mb-6 hidden">
-                    <span class="font-bold text-amber-900 block mb-1"><i class="fa-solid fa-circle-info mr-1"></i> Pembahasan:</span>
-                    <p id="pembahasan-teks"></p>
+                <!-- Solution & Discussion Box -->
+                <div id="pembahasan-box" class="p-4 sm:p-5 bg-amber-50 border-2 border-amber-200 rounded-2xl text-xs sm:text-sm text-slate-700 mb-6 hidden shadow-sm">
+                    <span class="font-extrabold text-amber-900 block mb-1 flex items-center gap-1.5 text-sm">
+                        <i class="fa-solid fa-circle-info text-amber-600"></i> Pembahasan & Cara Penyelesaian:
+                    </span>
+                    <p id="pembahasan-teks" class="leading-relaxed font-medium text-slate-800"></p>
                 </div>
 
-                <div class="flex justify-between items-center">
-                    <button onclick="prevSoal()" id="btn-prev" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs sm:text-sm transition-all disabled:opacity-50" disabled>
+                <!-- Navigation Controls -->
+                <div class="flex justify-between items-center gap-3">
+                    <button onclick="prevSoal()" id="btn-prev" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-extrabold px-4 sm:px-5 py-2.5 rounded-2xl text-xs sm:text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed active:scale-95" disabled>
                         <i class="fa-solid fa-arrow-left mr-1"></i> Sebelumnya
                     </button>
-                    <button onclick="nextSoal()" id="btn-next" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2 rounded-xl text-xs sm:text-sm transition-all shadow">
-                        Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                    <button onclick="nextSoal()" id="btn-next" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-5 sm:px-6 py-2.5 rounded-2xl text-xs sm:text-sm transition-all shadow-md active:scale-95 flex items-center gap-1.5">
+                        <span>Selanjutnya</span>
+                        <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
 
-                <!-- Hasil Akhir Kuis (Hidden by default) -->
+                <!-- Final Quiz Results View -->
                 <div id="quiz-result-container" class="hidden text-center py-8">
-                    <div class="inline-block p-4 bg-amber-100 text-amber-600 rounded-full text-5xl mb-4 shadow-inner">
+                    <div class="inline-block p-5 bg-gradient-to-tr from-amber-400 to-orange-400 text-white rounded-full text-5xl mb-4 shadow-xl animate-bounce">
                         <i id="result-icon" class="fa-solid fa-trophy"></i>
                     </div>
-                    <h3 class="text-2xl font-black text-slate-800 mb-2">Kuis Selesai! 🎉</h3>
-                    <p class="text-slate-600 mb-4 text-sm sm:text-base">Skor Akhir Kamu:</p>
-                    <div class="text-4xl font-black text-emerald-600 mb-2"><span id="final-score">0</span> / 100</div>
-                    <div id="badge-pujian" class="inline-block px-4 py-2 bg-emerald-100 text-emerald-800 rounded-2xl font-bold text-sm mb-6 shadow-sm">
-                        Luar Biasa! Master Kombinasi Kantin!
+                    <h3 class="text-2xl sm:text-3xl font-black text-slate-800 mb-2">Kuis Selesai! 🎉</h3>
+                    <p class="text-slate-600 mb-3 text-sm sm:text-base font-medium">Nilai Akhir Kombinasi Kamu:</p>
+                    <div class="text-5xl font-black text-emerald-600 mb-3"><span id="final-score">0</span> / 100</div>
+                    <div id="badge-pujian" class="inline-block px-5 py-2.5 bg-emerald-100 text-emerald-800 rounded-2xl font-extrabold text-sm mb-6 border border-emerald-300 shadow-sm">
+                        Luar Biasa! Master Kombinasi Jajanan Pasar!
                     </div>
                     <div>
-                        <button onclick="resetKuis()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-2xl shadow-lg transition-all text-sm">
-                            <i class="fa-solid fa-rotate-right mr-1"></i> Ulangi Kuis
+                        <button onclick="resetKuis()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black px-7 py-3.5 rounded-2xl shadow-lg transition-all text-sm inline-flex items-center gap-2 active:scale-95">
+                            <i class="fa-solid fa-rotate-right"></i> Ulangi Kuis Evaluasi
                         </button>
                     </div>
                 </div>
@@ -312,94 +353,146 @@
 
     </main>
 
-    <footer class="bg-white/60 backdrop-blur-md text-center py-4 text-xs text-slate-500 border-t border-slate-200/60">
-        <p>Aplikasi Interaktif Pembelajaran Kombinasi • Pendekatan Penemuan & Kontekstual Kantin Sekolah</p>
+    <!-- Footer -->
+    <footer class="bg-white/80 backdrop-blur-md text-center py-4 text-xs text-slate-500 border-t border-amber-200/60 mt-auto">
+        <p class="font-medium">Aplikasi Web Interaktif Pembelajaran Kombinasi • Pendekatan Penemuan Terbimbing Jajanan Pasar</p>
     </footer>
 
     <script>
+        // Tab Navigation Logic
         let currentTab = 1;
-        
-        // Tahap 1 State
+
+        // Dataset 6 Jajanan Pasar Tradisional Nusantara (WebP Images with Fallbacks)
         const jajananList = [
-            { id: 1, nama: "Kerupuk", harga: 1000, icon: "fa-cookie", color: "bg-amber-100 text-amber-700 border-amber-300" },
-            { id: 2, nama: "Es Teh", harga: 1000, icon: "fa-cup-straw-soda", color: "bg-sky-100 text-sky-700 border-sky-300" },
-            { id: 3, nama: "Donat", harga: 1000, icon: "fa-donut", color: "bg-pink-100 text-pink-700 border-pink-300" },
-            { id: 4, nama: "Roti", harga: 1000, icon: "fa-bread-slice", color: "bg-orange-100 text-orange-700 border-orange-300" }
+            { 
+                id: 1, 
+                nama: "Jalangkote", 
+                harga: 1000, 
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Jalangkote_Sulawesi.jpg/320px-Jalangkote_Sulawesi.jpg",
+                svgFallback: "🥟",
+                color: "bg-amber-50 border-amber-300 text-amber-900" 
+            },
+            { 
+                id: 2, 
+                nama: "Cantik Manis", 
+                harga: 1000, 
+                img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=320&q=80", 
+                svgFallback: "🍮",
+                color: "bg-pink-50 border-pink-300 text-pink-900" 
+            },
+            { 
+                id: 3, 
+                nama: "Risoles", 
+                harga: 1000, 
+                img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=320&q=80", 
+                svgFallback: "🌯",
+                color: "bg-orange-50 border-orange-300 text-orange-900" 
+            },
+            { 
+                id: 4, 
+                nama: "Dadar Gulung", 
+                harga: 1000, 
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Dadar_Gulung_aka_Dadara_isi_Unti_Kelapa.jpg/320px-Dadar_Gulung_aka_Dadara_isi_Unti_Kelapa.jpg", 
+                svgFallback: "🥖",
+                color: "bg-emerald-50 border-emerald-300 text-emerald-900" 
+            },
+            { 
+                id: 5, 
+                nama: "Kue Ku", 
+                harga: 1000, 
+                img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=320&q=80", 
+                svgFallback: "🥮",
+                color: "bg-rose-50 border-rose-300 text-rose-900" 
+            },
+            { 
+                id: 6, 
+                nama: "Lemper", 
+                harga: 1000, 
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Kue_Tradisional_Lemper.jpg/320px-Kue_Tradisional_Lemper.jpg", 
+                svgFallback: "🍙",
+                color: "bg-teal-50 border-teal-300 text-teal-900" 
+            }
         ];
+
+        // State variables Tahap 1
         let mangkokTerpilih = [];
         let riwayatKombinasi = [];
         let sisaUang = 2000;
         let sudahJawabPemantik = false;
 
-        // Tahap 2 State
+        // State variables Tahap 2
         let slot1Isi = null;
         let slot2Isi = null;
 
-        // Tahap 3 State (Evaluasi 10 Soal)
+        // State variables Tahap 3 (10 Real-world quiz questions)
         let activeSoalIdx = 0;
         let userAnswers = Array(10).fill(null);
-        let showExplanation = Array(10).fill(false);
 
         const soalKuis = [
             {
-                tanya: "1. Dari 5 orang pengurus OSIS, akan dipilih 2 orang untuk mewakili rapat di aula. Berapa banyak cara pemilihan pengurus tersebut?",
-                pilihan: ["A. 5 cara", "B. 10 cara", "C. 20 cara", "D. 25 cara"],
+                tanya: "1. Dari 6 jenis jajanan pasar yang tersedia di meja kantin (Jalangkote, Cantik Manis, Risoles, Dadar Gulung, Kue Ku, Lemper), Ani ingin memilih tepat 2 jenis jajanan. Berapa banyak kombinasi pasangan jajanan yang mungkin dipilih Ani?",
+                pilihan: ["A. 12 cara", "B. 15 cara", "C. 30 cara", "D. 36 cara"],
                 kunci: 1,
-                pembahasan: "Menggunakan kombinasi C(5,2) = 5! / (2! 3!) = (5 × 4) / (2 × 1) = 10 cara."
+                pembahasan: "Menggunakan rumus kombinasi C(6,2) = 6! / (2! × (6-2)!) = (6 × 5) / (2 × 1) = 15 pasangan kue unik."
             },
             {
-                tanya: "2. Ibu membeli 6 jenis buah di pasar, dan anak diminta memilih 3 jenis buah untuk dibuatkan jus campuran. Banyak cara memilih buah adalah...",
-                pilihan: ["A. 15 cara", "B. 20 cara", "C. 30 cara", "D. 120 cara"],
+                tanya: "2. Ibu membeli 5 varian jajanan tradisional basah untuk acara keluarga. Anak-anak boleh mengambil 3 varian kue sekaligus ke dalam piring. Banyaknya kombinasi pilihan varian kue adalah...",
+                pilihan: ["A. 10 cara", "B. 15 cara", "C. 20 cara", "D. 60 cara"],
+                kunci: 0,
+                pembahasan: "C(5,3) = 5! / (3! × 2!) = (5 × 4) / (2 × 1) = 10 cara."
+            },
+            {
+                tanya: "3. Dalam perlombaan menyusun hantaran kue, panitia menyediakan 7 jenis kue tradisional (termasuk Jalangkote dan Lemper). Peserta harus memilih 4 jenis kue. Berapa banyak kombinasi pilihan kue yang ada?",
+                pilihan: ["A. 28 cara", "B. 35 cara", "C. 42 cara", "D. 210 cara"],
                 kunci: 1,
-                pembahasan: "C(6,3) = 6! / (3! 3!) = (6 × 5 × 4) / (3 × 2 × 1) = 20 cara."
+                pembahasan: "C(7,4) = C(7,3) = (7 × 6 × 5) / (3 × 2 × 1) = 35 kombinasi."
             },
             {
-                tanya: "3. Dalam sebuah ulangan matematika, siswa wajib mengerjakan 4 soal dari 7 soal yang tersedia. Berapa banyak pilihan kombinasi soal yang dapat dikerjakan siswa?",
-                pilihan: ["A. 24 cara", "B. 28 cara", "C. 35 cara", "D. 42 cara"],
-                kunci: 2,
-                pembahasan: "C(7,4) = C(7,3) = (7 × 6 × 5) / (3 × 2 × 1) = 35 cara."
-            },
-            {
-                tanya: "4. Di toko buku, tersedia 8 buku novel yang menarik. Budi hanya memiliki cukup uang untuk membeli 2 buku saja. Berapa banyak cara Budi memilih 2 buku dari 8 buku tersebut?",
+                tanya: "4. Toko kue tradisional memproduksi 8 varian snack gurih. Pelanggan memesan paket hemat berisi 2 varian berbeda. Banyak kombinasi varian kue dalam paket tersebut adalah...",
                 pilihan: ["A. 16 cara", "B. 28 cara", "C. 56 cara", "D. 64 cara"],
                 kunci: 1,
                 pembahasan: "C(8,2) = (8 × 7) / (2 × 1) = 28 cara."
             },
             {
-                tanya: "5. Sebuah kotak berisi 4 bola merah dan 3 bola putih. Jika diambil 3 bola sekaligus secara acak dari kotak tersebut, berapa banyak cara pengambilan 2 bola merah dan 1 bola putih?",
+                tanya: "5. Di piring saji terdapat 4 kue Jalangkote dan 3 kue Cantik Manis. Jika diambil 3 kue sekaligus, berapa banyak cara memilih 2 kue Jalangkote dan 1 kue Cantik Manis?",
                 pilihan: ["A. 12 cara", "B. 18 cara", "C. 24 cara", "D. 30 cara"],
                 kunci: 1,
-                pembahasan: "C(4,2) × C(3,1) = ((4×3)/(2×1)) × 3 = 6 × 3 = 18 cara."
+                pembahasan: "Aturan perkalian kombinasi: C(4,2) × C(3,1) = 6 × 3 = 18 cara."
             },
             {
-                tanya: "6. Pada pembentukan tim bola voli dari 9 orang pemain andalan, akan dipilih 6 orang inti yang turun ke lapangan. Berapa banyak susunan tim yang mungkin?",
+                tanya: "6. Pemilik katering ingin menyusun bingkisan snack berisi 6 varian kue dari total 9 pilihan kue tradisional yang tersedia. Berapa kombinasi isi bingkisan yang dapat dibentuk?",
                 pilihan: ["A. 54 cara", "B. 72 cara", "C. 84 cara", "D. 126 cara"],
                 kunci: 2,
-                pembahasan: "C(9,6) = C(9,3) = (9 × 8 × 7) / (3 × 2 × 1) = 84 cara."
+                pembahasan: "C(9,6) = C(9,3) = (9 × 8 × 7) / (3 × 2 × 1) = 84 kombinasi."
             },
             {
-                tanya: "7. Dari 10 anggota klub seni rupa, akan dipilih 3 pengurus inti (ketua, sekretaris, bendahara dianggap setara/tanpa jabatan khusus). Banyak cara pemilihan adalah...",
+                tanya: "7. Dari 10 orang panitia bazar kuliner nusantara, akan dipilih 3 orang secara acak untuk menjadi tim cicip makanan (tanpa urutan jabatan). Banyaknya cara memilih tim tersebut adalah...",
                 pilihan: ["A. 120 cara", "B. 240 cara", "C. 720 cara", "D. 1.000 cara"],
                 kunci: 0,
                 pembahasan: "C(10,3) = (10 × 9 × 8) / (3 × 2 × 1) = 120 cara."
             },
             {
-                tanya: "8. Seorang petani ingin membeli 3 ekor kambing dari seorang peternak yang memiliki 7 ekor kambing sehat. Banyak cara pemilihan kambing tersebut adalah...",
+                tanya: "8. Koki ingin membuat inovasi resep isian kue dengan mengombinasikan 3 bahan dari 7 bahan pilihan yang tersedia. Banyaknya variasi kombinasi bahan isian adalah...",
                 pilihan: ["A. 21 cara", "B. 35 cara", "C. 42 cara", "D. 210 cara"],
                 kunci: 1,
                 pembahasan: "C(7,3) = (7 × 6 × 5) / (3 × 2 × 1) = 35 cara."
             },
             {
-                tanya: "9. Dalam soal ujian terdapat 10 nomor pilihan. Jika siswa harus menjawab 5 nomor ganjil dan 2 nomor genap dari total soal yang ada (misal 5 ganjil dan 5 genap), berapa kombinasi pilihan soal nomor ganjil dari 5 nomor ganjil yang tersedia?",
+                tanya: "9. Dalam sebuah wadah terdapat 5 jenis kue manis tradisional. Jika seseorang mengambil semua 5 jenis kue tersebut sekaligus, ada berapa kombinasi pengambilannya?",
                 pilihan: ["A. 1 cara", "B. 5 cara", "C. 10 cara", "D. 25 cara"],
                 kunci: 0,
-                pembahasan: "C(5,5) = 1 cara (semua nomor ganjil harus dipilih)."
+                pembahasan: "C(5,5) = 1 cara, karena seluruh elemen terpilih tanpa ada pilihan tersisa."
             },
             {
-                tanya: "10. Mengapa rumus kombinasi menggunakan pembagian dengan faktorial $r!$ di bagian penyebut?",
-                pilihan: ["A. Karena nilai akhir harus selalu diperbesar", "B. Karena urutan pengambilan objek tidak diperhatikan (diabaikan)", "C. Karena jumlah item selalu genap", "D. Untuk menghitung keliling lingkaran"],
+                tanya: "10. Mengapa dalam perhitungan Kombinasi C(n,r) rumus permutasi P(n,r) harus dibagi dengan r! (faktorial r)?",
+                pilihan: [
+                    "A. Untuk menambah jumlah susunan hasil akhir", 
+                    "B. Karena urutan pengambilan objek diabaikan sehingga susunan ganda dilebur", 
+                    "C. Karena harga jajanan pasar selalu dikali 2", 
+                    "D. Untuk menghitung luas piring penyajian"
+                ],
                 kunci: 1,
-                pembahasan: "Pembagian dengan r! berfungsi untuk menghilangkan duplikasi susunan yang diakibatkan oleh perbedaan urutan (karena dalam kombinasi AB dianggap sama dengan BA)."
+                pembahasan: "Pembagian dengan r! berfungsi menghilangkan duplikasi urutan (karena dalam kombinasi, susunan {Jalangkote, Lemper} sama persis dengan {Lemper, Jalangkote})."
             }
         ];
 
@@ -407,24 +500,35 @@
             currentTab = tabNum;
             for (let i = 1; i <= 3; i++) {
                 document.getElementById(`tab-${i}`).classList.add('hidden');
-                document.getElementById(`tab-btn-${i}`).className = "flex-1 sm:flex-none px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-amber-600";
+                document.getElementById(`tab-btn-${i}`).className = "flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all text-slate-600 hover:text-amber-700";
             }
             document.getElementById(`tab-${tabNum}`).classList.remove('hidden');
             const activeBtn = document.getElementById(`tab-btn-${tabNum}`);
-            activeBtn.className = "flex-1 sm:flex-none px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-amber-500 text-white shadow";
+            activeBtn.className = "flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all bg-amber-500 text-white shadow-md";
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
         }
 
         function renderEtalase() {
             const etalaseEl = document.getElementById('etalase-jajanan');
             etalaseEl.innerHTML = '';
+            
             jajananList.forEach(item => {
                 const isTerpilih = mangkokTerpilih.some(m => m.id === item.id);
                 etalaseEl.innerHTML += `
-                    <button onclick="pilihJajanan(${item.id})" ${isTerpilih ? 'disabled' : ''} class="p-3 rounded-2xl border-2 ${item.color} flex flex-col items-center justify-center gap-1 transition-all shadow-sm ${isTerpilih ? 'opacity-40 cursor-not-allowed grayscale' : 'hover:scale-105 cursor-pointer'}">
-                        <i class="fa-solid ${item.icon} text-2xl"></i>
-                        <span class="font-bold text-xs">${item.nama}</span>
-                        <span class="text-[10px] opacity-75">Rp ${item.harga}</span>
+                    <button onclick="pilihJajanan(${item.id})" ${isTerpilih ? 'disabled' : ''} 
+                        class="p-2.5 rounded-2xl border-2 ${item.color} flex flex-col items-center justify-center gap-1.5 transition-all shadow-sm ${isTerpilih ? 'opacity-40 cursor-not-allowed grayscale' : 'hover:scale-105 active:scale-95 cursor-pointer bg-white'}">
+                        <div class="w-full h-16 sm:h-20 rounded-xl overflow-hidden bg-slate-100 relative border border-slate-200">
+                            <img src="${item.img}" alt="${item.nama}" 
+                                loading="lazy"
+                                onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-2xl bg-amber-100\'>${item.svgFallback}</div>';"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <span class="font-extrabold text-xs text-slate-800 text-center leading-tight">${item.nama}</span>
+                        <span class="text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">Rp ${item.harga}</span>
                     </button>
                 `;
             });
@@ -437,9 +541,9 @@
 
             if (mangkokTerpilih.length === 0) {
                 mangkokEl.innerHTML = `
-                    <div class="col-span-2 text-center text-slate-400 text-sm py-8 italic flex flex-col items-center justify-center gap-1">
-                        <i class="fa-solid fa-hand-pointer text-xl animate-bounce"></i>
-                        <span>Belum ada makanan di mangkok. Klik 2 jajanan dari etalase!</span>
+                    <div class="text-center text-slate-400 text-xs sm:text-sm py-10 italic flex flex-col items-center justify-center gap-2">
+                        <i class="fa-solid fa-hand-pointer text-2xl text-amber-400 animate-bounce"></i>
+                        <span>Mangkok masih kosong.<br>Klik 2 kue lezat dari meja!</span>
                     </div>
                 `;
                 return;
@@ -448,15 +552,20 @@
             mangkokEl.innerHTML = '';
             mangkokTerpilih.forEach(item => {
                 mangkokEl.innerHTML += `
-                    <div class="bg-white p-2.5 rounded-xl shadow-sm border border-amber-200 flex items-center justify-between animate-fadeIn">
-                        <div class="flex items-center gap-2">
-                            <div class="p-2 rounded-lg bg-amber-100 text-amber-700 text-sm">
-                                <i class="fa-solid ${item.icon}"></i>
+                    <div class="bg-white p-2 sm:p-2.5 rounded-2xl shadow-sm border border-amber-200 flex items-center justify-between gap-2 animate-fadeIn">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
+                                <img src="${item.img}" alt="${item.nama}" 
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-lg bg-amber-100\'>${item.svgFallback}</div>';"
+                                    class="w-full h-full object-cover">
                             </div>
-                            <span class="font-bold text-xs text-slate-700">${item.nama}</span>
+                            <div>
+                                <h4 class="font-extrabold text-xs text-slate-800 leading-tight">${item.nama}</h4>
+                                <span class="text-[10px] text-slate-500 font-semibold">Rp ${item.harga}</span>
+                            </div>
                         </div>
-                        <button onclick="hapusDariMangkok(${item.id})" class="text-rose-500 hover:text-rose-700 text-xs p-1">
-                            <i class="fa-solid fa-xmark"></i>
+                        <button onclick="hapusDariMangkok(${item.id})" class="text-rose-500 hover:text-rose-700 hover:bg-rose-50 text-xs p-1.5 rounded-xl transition-all">
+                            <i class="fa-solid fa-xmark text-sm"></i>
                         </button>
                     </div>
                 `;
@@ -496,7 +605,6 @@
         }
 
         function catatKombinasiUnik() {
-            // Sort to ensure uniqueness regardless of selection order
             const namaSorted = mangkokTerpilih.map(j => j.nama).sort().join(" & ");
             
             if (!riwayatKombinasi.includes(namaSorted)) {
@@ -505,23 +613,23 @@
                 
                 const infoMsg = document.getElementById('info-kombinasi-baru');
                 infoMsg.classList.remove('hidden');
-                setTimeout(() => infoMsg.classList.add('hidden'), 3000);
+                setTimeout(() => infoMsg.classList.add('hidden'), 3500);
             }
 
-            if (riwayatKombinasi.length >= 3 && !sudahJawabPemantik) {
+            if (riwayatKombinasi.length >= 2 && !sudahJawabPemantik) {
                 document.getElementById('pertanyaan-pemantik-container').classList.remove('hidden');
             }
         }
 
         function updateRiwayatTampilan() {
             const riwayatListEl = document.getElementById('riwayat-list');
-            document.getElementById('counter-kombinasi').innerText = `${riwayatKombinasi.length} dari 6 Kombinasi`;
+            document.getElementById('counter-kombinasi').innerText = `${riwayatKombinasi.length} dari 15 Kombinasi Unik`;
             
             riwayatListEl.innerHTML = '';
             riwayatKombinasi.forEach((kombo, idx) => {
                 riwayatListEl.innerHTML += `
-                    <span class="bg-emerald-100 text-emerald-800 border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm animate-fadeIn">
-                        <i class="fa-solid fa-check mr-1"></i> #${idx+1}: ${kombo}
+                    <span class="bg-emerald-100 text-emerald-900 border border-emerald-300 px-3 py-1 rounded-xl text-xs font-bold shadow-sm inline-flex items-center gap-1.5 animate-fadeIn">
+                        <i class="fa-solid fa-check text-emerald-600"></i> #${idx+1}: ${kombo}
                     </span>
                 `;
             });
@@ -531,13 +639,14 @@
             sudahJawabPemantik = true;
             const feedbackEl = document.getElementById('feedback-pemantik');
             feedbackEl.classList.remove('hidden');
+            
             if (isBenar) {
-                feedbackEl.className = "mt-3 p-3 rounded-xl text-xs sm:text-sm font-bold bg-emerald-100 text-emerald-800 border border-emerald-300";
-                feedbackEl.innerHTML = "🎉 Tepat Sekali! Urutan pemilihan tidak penting dalam mangkok jajanan. (Kerupuk + Es Teh) sama dengan (Es Teh + Kerupuk). Inilah inti dari konsep <strong>Kombinasi</strong>!";
+                feedbackEl.className = "mt-4 p-4 rounded-2xl text-xs sm:text-sm font-bold bg-emerald-100 text-emerald-900 border-2 border-emerald-300 leading-relaxed";
+                feedbackEl.innerHTML = "🎉 Jawaban Tepat Sekali! Urutan pengambilan kue tidak memengaruhi isi akhir di dalam mangkok. Pasangan (Jalangkote + Cantik Manis) sama persis dengan (Cantik Manis + Jalangkote). Inilah definisi utama <strong>Kombinasi</strong>!";
                 document.getElementById('btn-lanjut-1').classList.remove('hidden');
             } else {
-                feedbackEl.className = "mt-3 p-3 rounded-xl text-xs sm:text-sm font-bold bg-rose-100 text-rose-800 border border-rose-300";
-                feedbackEl.innerHTML = "❌ Kurang tepat. Coba bayangkan mangkok kantinmu: apakah isi mangkoknya berubah jika kamu ambil minumnya dulu baru kerupuknya? Tentu isinya tetap sama! Coba pilih opsi B.";
+                feedbackEl.className = "mt-4 p-4 rounded-2xl text-xs sm:text-sm font-bold bg-rose-100 text-rose-900 border-2 border-rose-300 leading-relaxed";
+                feedbackEl.innerHTML = "❌ Kurang Tepat. Coba perhatikan mangkokmu: Apakah kue di dalamnya berubah jenis hanya karena urutan pengambilannya? Tentu tidak! Silakan pilih jawaban B.";
                 sudahJawabPemantik = false;
             }
         }
@@ -545,6 +654,7 @@
         function jalankanLeburAnimasi() {
             const box = document.getElementById('lebur-result-box');
             box.classList.remove('hidden');
+            if (window.MathJax) MathJax.typesetPromise();
         }
 
         function allowDrop(ev) {
@@ -567,7 +677,6 @@
             } else if (!slot2Isi) {
                 isiSlot(2, data);
             } else {
-                // Reset slots if full
                 slot1Isi = null;
                 slot2Isi = null;
                 isiSlot(1, data);
@@ -579,17 +688,17 @@
                 slot1Isi = val;
                 const slotEl = document.getElementById('slot-1');
                 slotEl.innerText = val;
-                slotEl.className = "w-32 h-12 bg-amber-100 border-2 border-amber-400 rounded-xl flex items-center justify-center text-sm font-bold text-amber-800 shadow-sm transition-all";
+                slotEl.className = "w-32 h-12 bg-amber-100 border-2 border-amber-500 rounded-xl flex items-center justify-center text-sm font-black text-amber-900 shadow-sm transition-all";
             } else {
                 slot2Isi = val;
                 const slotEl = document.getElementById('slot-2');
                 slotEl.innerText = val;
-                slotEl.className = "w-24 h-12 bg-emerald-100 border-2 border-emerald-400 rounded-xl flex items-center justify-center text-sm font-bold text-emerald-800 shadow-sm transition-all";
+                slotEl.className = "w-28 h-12 bg-emerald-100 border-2 border-emerald-500 rounded-xl flex items-center justify-center text-sm font-black text-emerald-900 shadow-sm transition-all";
             }
 
-            // Check if correct: C(n,r) = P(n,r) / r!
             if (slot1Isi === 'P(n,r)' && slot2Isi === 'r!') {
                 document.getElementById('rumus-sukses-box').classList.remove('hidden');
+                if (window.MathJax) MathJax.typesetPromise();
             } else {
                 document.getElementById('rumus-sukses-box').classList.add('hidden');
             }
@@ -606,45 +715,45 @@
             soal.pilihan.forEach((pil, idx) => {
                 const isSelected = userAnswers[activeSoalIdx] === idx;
                 const isCorrect = soal.kunci === idx;
-                let btnStyle = "bg-white hover:bg-slate-100 border-slate-300 text-slate-700";
+                let btnStyle = "bg-white hover:bg-slate-100 border-slate-300 text-slate-700 font-semibold";
 
                 if (userAnswers[activeSoalIdx] !== null) {
                     if (isCorrect) {
-                        btnStyle = "bg-emerald-100 border-emerald-400 text-emerald-900 font-bold";
+                        btnStyle = "bg-emerald-100 border-emerald-500 text-emerald-950 font-extrabold shadow-sm";
                     } else if (isSelected && !isCorrect) {
-                        btnStyle = "bg-rose-100 border-rose-400 text-rose-900";
+                        btnStyle = "bg-rose-100 border-rose-400 text-rose-950 font-extrabold";
                     } else {
-                        btnStyle = "bg-white border-slate-200 opacity-60";
+                        btnStyle = "bg-white border-slate-200 opacity-50";
                     }
                 }
 
                 pilihanEl.innerHTML += `
-                    <button onclick="pilihJawaban(${idx})" class="p-3.5 rounded-xl border-2 text-left text-xs sm:text-sm transition-all shadow-sm ${btnStyle}">
+                    <button onclick="pilihJawaban(${idx})" class="p-3.5 sm:p-4 rounded-2xl border-2 text-left text-xs sm:text-sm transition-all shadow-sm ${btnStyle} active:scale-98">
                         ${pil}
                     </button>
                 `;
             });
 
-            // Pembahasan box
             const pembahasanBox = document.getElementById('pembahasan-box');
             if (userAnswers[activeSoalIdx] !== null) {
                 pembahasanBox.classList.remove('hidden');
-                document.getElementById('pembahasan-teks').innerText = soal.pahasan || soal.pembahasan;
+                document.getElementById('pembahasan-teks').innerText = soal.pembahasan;
             } else {
                 pembahasanBox.classList.add('hidden');
             }
 
-            // Button state
             document.getElementById('btn-prev').disabled = activeSoalIdx === 0;
             if (activeSoalIdx === 9) {
                 document.getElementById('btn-next').innerText = "Selesai & Lihat Skor";
             } else {
-                document.getElementById('btn-next').innerHTML = `Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>`;
+                document.getElementById('btn-next').innerHTML = `<span>Selanjutnya</span> <i class="fa-solid fa-arrow-right"></i>`;
             }
+
+            if (window.MathJax) MathJax.typesetPromise();
         }
 
         function pilihJawaban(idx) {
-            if (userAnswers[activeSoalIdx] !== null) return; // Locked once answered
+            if (userAnswers[activeSoalIdx] !== null) return;
             userAnswers[activeSoalIdx] = idx;
             renderSoal();
         }
@@ -676,11 +785,11 @@
 
             const badgeEl = document.getElementById('badge-pujian');
             if (skorAkhir === 100) {
-                badgeEl.innerText = "🌟 Sempurna! Master Kombinasi Sejati!";
+                badgeEl.innerText = "🌟 Sempurna! Master Kombinasi Jajanan Pasar Sejati!";
             } else if (skorAkhir >= 70) {
-                badgeEl.innerText = "👏 Hebat! Pemahaman Kombinasi Kamu Sangat Baik!";
+                badgeEl.innerText = "👏 Luar Biasa! Pemahaman Kombinasi Kamu Sangat Baik!";
             } else {
-                badgeEl.innerText = "💪 Tetap Semangat! Coba pelajari ulang Tahap 1 & 2 ya!";
+                badgeEl.innerText = "💪 Tetap Semangat! Pelajari kembali Tahap 1 & 2 ya!";
             }
 
             document.getElementById('quiz-card').classList.add('hidden');
@@ -700,7 +809,7 @@
             renderSoal();
         }
 
-        // Initialize on load
+        // Initialize application on window load
         window.onload = function() {
             renderEtalase();
             renderMangkok();
